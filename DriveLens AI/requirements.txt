@@ -1,0 +1,5 @@
+gradio
+deepface
+gdown
+opencv-python-headless
+tf-keras
