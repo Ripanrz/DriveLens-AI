@@ -16,7 +16,7 @@
 
 > *Aplikasi web interaktif dengan antarmuka yang bersih, di-deploy secara live di ekosistem Hugging Face.*
 
-![Tampilan Dashboard](DriveLensAI/Dashboard_PencarianWajah.png)
+![Tampilan Dashboard](DriveLens%20AI/Cuplikan%20layar%202026-02-23%20225926.png)
 
 ---
 
