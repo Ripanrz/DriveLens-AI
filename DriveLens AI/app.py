@@ -41,20 +41,31 @@ def cari_wajah(foto_referensi, link_drive):
     except Exception as e:
         return f"Terjadi kesalahan saat memproses AI: {e}", []
 
+# --- CSS KUSTOM UNTUK MEMAKSA SIMETRIS ---
+css_kustom = """
+.force-row { flex-wrap: nowrap !important; }
+"""
+
 # --- MEMBUAT TAMPILAN WEBSITE (UI) DENGAN GRADIO ---
-with gr.Blocks(theme=gr.themes.Soft()) as web_app:
+with gr.Blocks(theme=gr.themes.Soft(), css=css_kustom) as web_app:
     gr.Markdown("# 🔍 DriveLens AI - Pencari Wajah Otomatis")
     gr.Markdown("Unggah foto wajah Anda, masukkan link folder Google Drive kegiatan, dan biarkan AI mencari foto Anda!")
     
-    with gr.Row():
-        with gr.Column():
-            input_foto = gr.Image(type="filepath", label="1. Unggah Foto Wajah Anda (Referensi)")
+    # Menggunakan equal_height dan mematikan auto-wrap (force-row)
+    with gr.Row(equal_height=True, elem_classes="force-row"):
+        
+        # --- KOLOM KIRI (INPUT) ---
+        with gr.Column(scale=1, min_width=300):
+            # height=300 memastikan foto selalu compact dan tidak memanjang ke bawah
+            input_foto = gr.Image(type="filepath", label="1. Unggah Foto Wajah Anda (Referensi)", height=300)
             input_link = gr.Textbox(label="2. Link Folder Google Drive (Pastikan aksesnya Public)", placeholder="https://drive.google.com/drive/folders/...")
             tombol_cari = gr.Button("Cari Foto Saya! 🚀", variant="primary")
             
-        with gr.Column():
+        # --- KOLOM KANAN (OUTPUT) ---
+        with gr.Column(scale=1, min_width=300):
             output_teks = gr.Textbox(label="Status Pencarian", interactive=False)
-            output_galeri = gr.Gallery(label="Hasil Foto Anda", columns=2, object_fit="contain", height="auto")
+            # height=400 disetel agar batas bawah galeri sejajar dengan batas bawah tombol di kiri
+            output_galeri = gr.Gallery(label="Hasil Foto Anda", columns=2, object_fit="contain", height=400)
             
     # Menghubungkan tombol dengan fungsi AI
     tombol_cari.click(
